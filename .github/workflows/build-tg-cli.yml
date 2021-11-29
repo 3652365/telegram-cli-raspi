@@ -27,6 +27,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
+    - uses: uraimo/run-on-arch-action@main
     - name: Init env
       env:
         DEBIAN_FRONTEND: noninteractive
