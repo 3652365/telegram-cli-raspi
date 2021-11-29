@@ -15,7 +15,7 @@ jobs:
             uname -a
             apt-get -y update
             apt-get -y upgrade
-            apt-get -y install libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libpython3-dev make
+            apt-get -y install libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libpython3-dev make git
             git clone --recursive https://github.com/vysheng/tg.git && cd tg
             ./configure && make
             
