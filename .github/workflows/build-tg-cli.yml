@@ -8,6 +8,7 @@
 name: Build Telegram-cli for raspberry pi
 
 on:
+  push:
   workflow_dispatch:
     inputs:
         ssh:
@@ -35,12 +36,22 @@ jobs:
         sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
         # sudo timedatectl set-timezone "$TZ"
 
     - name: Clone source code
-      working-directory: /root
+      working-directory: /workdir
       run: |
         df -hT $PWD
         git clone $REPO_URL tg-cli
 
+    - name: run cmd
+      id: runcmd
+      with:
+        arch: aarch64
+        distro: ubuntu20.04
+        run: |
+          uname -a
+          echo ::set-output name=uname::$(uname -a)
 
