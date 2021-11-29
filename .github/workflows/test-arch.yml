@@ -26,7 +26,7 @@ jobs:
             # git clone --recursive https://github.com/vysheng/tg.git && cd tg
             git clone --recursive https://github.com/kenorb-contrib/tg.git && cd tg
             sed -i 's/assert (0)/\/\/assert (0)/g' tgl/mtproto-utils.c
-            ./configure && make -j$(nproc)
+            ./configure --enable-shared=no --enable-static=yes && make -j$(nproc)
             cd ../
             tar cvf tg.tar_aarch64.gz tg
             
@@ -66,7 +66,7 @@ jobs:
             # git clone --recursive https://github.com/vysheng/tg.git && cd tg
             git clone --recursive https://github.com/kenorb-contrib/tg.git && cd tg
             sed -i 's/assert (0)/\/\/assert (0)/g' tgl/mtproto-utils.c
-            ./configure && make -j$(nproc)
+            ./configure --enable-shared=no --enable-static=yes && make -j$(nproc)
             cd ../
             tar cvf tg.tar_armv7.gz tg
             
