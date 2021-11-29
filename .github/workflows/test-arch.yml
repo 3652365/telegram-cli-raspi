@@ -45,7 +45,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: my-artifact-aarch64
           path: /home/runner/work/telegram-cli-raspi/telegram-cli-raspi/tg.tar_aarch64.gz
 
   armv7:
@@ -85,5 +85,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: my-artifact-armv7
           path: /home/runner/work/telegram-cli-raspi/telegram-cli-raspi/tg.tar_armv7.gz
