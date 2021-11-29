@@ -49,10 +49,7 @@ jobs:
 
     - name: run cmd
       id: runcmd
-      with:
-        arch: aarch64
-        distro: ubuntu20.04
-        run: |
-          uname -a
-          echo ::set-output name=uname::$(uname -a)
+      run: |
+        uname -a
+        echo ::set-output name=uname::$(uname -a)
 
