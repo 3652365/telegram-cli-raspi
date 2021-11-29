@@ -8,7 +8,7 @@
 name: Build Telegram-cli for raspberry pi
 
 on:
-  push:
+  #push:
   workflow_dispatch:
     inputs:
         ssh:

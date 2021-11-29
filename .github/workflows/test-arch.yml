@@ -8,7 +8,7 @@ on:
         default: 'false'
 
 jobs:
-  build:
+  aarch64:
     runs-on: ubuntu-20.04
     name: Build on Aarch64
     steps:
@@ -28,7 +28,7 @@ jobs:
             sed -i 's/assert (0)/\/\/assert (0)/g' tgl/mtproto-utils.c
             ./configure && make -j$(nproc)
             cd ../
-            tar cvf tg.tar.gz tg
+            tar cvf tg.tar_aarch64.gz tg
             
             echo ::set-output name=uname::$(uname -a)
 
@@ -46,4 +46,44 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: /home/runner/work/telegram-cli-raspi/telegram-cli-raspi/tg.tar.gz
+          path: /home/runner/work/telegram-cli-raspi/telegram-cli-raspi/tg.tar_aarch64.gz
+
+  armv7:
+    runs-on: ubuntu-20.04
+    name: Build on Armv7
+    steps:
+      - uses: actions/checkout@main
+      - uses: uraimo/run-on-arch-action@v2.1.0
+        id: runcmd
+        with:
+          arch: armv7
+          distro: ubuntu20.04
+          run: |
+            uname -a
+            apt-get -y update
+            apt-get -y upgrade
+            apt-get -y install libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libpython3-dev make git zlib1g zlib1g-dev
+            # git clone --recursive https://github.com/vysheng/tg.git && cd tg
+            git clone --recursive https://github.com/kenorb-contrib/tg.git && cd tg
+            sed -i 's/assert (0)/\/\/assert (0)/g' tgl/mtproto-utils.c
+            ./configure && make -j$(nproc)
+            cd ../
+            tar cvf tg.tar_armv7.gz tg
+            
+            echo ::set-output name=uname::$(uname -a)
+
+      - name: SSH connection to Actions
+        uses: P3TERX/ssh2actions@v1.0.0
+        if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+        env:
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+      - name: Get the output
+        run: |
+            echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: /home/runner/work/telegram-cli-raspi/telegram-cli-raspi/tg.tar_armv7.gz
