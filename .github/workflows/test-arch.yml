@@ -16,8 +16,10 @@ jobs:
             apt-get -y update
             apt-get -y upgrade
             apt-get -y install libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libpython3-dev make git zlib1g zlib1g-dev
-            git clone --recursive https://github.com/vysheng/tg.git && cd tg
-            ./configure && make
+            # git clone --recursive https://github.com/vysheng/tg.git && cd tg
+            git clone --recursive https://github.com/kenorb-contrib/tg.git && cd tg
+            sed -i 's/assert (0)/\/\/assert (0)/g' tgl/mtproto-utils.c
+            ./configure && make -j$(nproc)
             cd ../
             tar cvf tg.tar.gz tg
             
@@ -25,3 +27,8 @@ jobs:
       - name: Get the output
         run: |
             echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: tg
