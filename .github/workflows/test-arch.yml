@@ -15,9 +15,11 @@ jobs:
             uname -a
             apt-get -y update
             apt-get -y upgrade
-            apt-get -y install libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libpython3-dev make git zlib1g
+            apt-get -y install libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libpython3-dev make git zlib1g zlib1g-dev
             git clone --recursive https://github.com/vysheng/tg.git && cd tg
             ./configure && make
+            cd ../
+            tar cvf tg.tar.gz tg
             
             echo ::set-output name=uname::$(uname -a)
       - name: Get the output
