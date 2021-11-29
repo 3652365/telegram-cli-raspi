@@ -27,7 +27,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - uses: uraimo/run-on-arch-action@v2.1.1
+
     - name: Init env
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -46,9 +46,13 @@ jobs:
       run: |
         df -hT $PWD
         git clone $REPO_URL tg-cli
-
-    - name: run cmd
+    - uses: uraimo/run-on-arch-action@v2.1.1
+      name: run cmd
       id: runcmd
+      with:
+          arch: armv7
+          distro: ubuntu18.04
+
       run: |
         uname -a
         echo ::set-output name=uname::$(uname -a)
