@@ -46,4 +46,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: tg
+          path: /home/runner/work/telegram-cli-raspi/telegram-cli-raspi/tg.tar.gz
