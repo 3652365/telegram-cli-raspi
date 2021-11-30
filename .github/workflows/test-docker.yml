@@ -1,4 +1,4 @@
-name: login shell actions
+name: test docker in action
 
 on:
   push:
