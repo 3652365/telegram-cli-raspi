@@ -17,8 +17,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - name: init env
       run: |
+    - name: init env
         #sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq upgrade
@@ -26,19 +26,22 @@ jobs:
         sudo -E apt-get -qq install libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev libjansson-dev libpython3-dev make git zlib1g zlib1g-dev
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
-        git clone --recursive https://github.com/kenorb-contrib/tg.git && cd tg
-        ./configure && make -j$(nproc)
-        cp -v /lib/x86_64-linux-gnu/libevent-2.1.so.7 libs/
-        cp -v /lib/x86_64-linux-gnu/libjansson.so.4 libs/
-        cp -v /lib/x86_64-linux-gnu/libconfig.so.9 libs/
-        cp -v /lib/x86_64-linux-gnu/libz.so.1 libs/
-        cp -v /lib/x86_64-linux-gnu/libreadline.so.8 libs/
-        cp -v /lib/x86_64-linux-gnu/liblua5.2.so.0 libs/
-        cp -v /lib/x86_64-linux-gnu/libcrypto.so.1.1 libs/
-        cp -v /lib/x86_64-linux-gnu/libpthread.so.0 libs/
-        cd ../
-        tar cvf tg_x86.tar.gz tg
-           
+        git clone https://github.com/userdocs/qbittorrent-nox-static.git qb && cd qb
+        # qbittorrent-nox-static.sh all
+
+#        git clone --recursive https://github.com/kenorb-contrib/tg.git && cd tg
+#        ./configure && make -j$(nproc)
+#        cp -v /lib/x86_64-linux-gnu/libevent-2.1.so.7 libs/
+#        cp -v /lib/x86_64-linux-gnu/libjansson.so.4 libs/
+#        cp -v /lib/x86_64-linux-gnu/libconfig.so.9 libs/
+#        cp -v /lib/x86_64-linux-gnu/libz.so.1 libs/
+#        cp -v /lib/x86_64-linux-gnu/libreadline.so.8 libs/
+#        cp -v /lib/x86_64-linux-gnu/liblua5.2.so.0 libs/
+#        cp -v /lib/x86_64-linux-gnu/libcrypto.so.1.1 libs/
+#        cp -v /lib/x86_64-linux-gnu/libpthread.so.0 libs/
+#        cd ../
+#        tar cvf tg_x86.tar.gz tg
+#           
         
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
