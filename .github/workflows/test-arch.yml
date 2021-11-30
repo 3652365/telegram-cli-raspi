@@ -67,6 +67,8 @@ jobs:
             git clone --recursive https://github.com/kenorb-contrib/tg.git && cd tg
             sed -i 's/assert (0)/\/\/assert (0)/g' tgl/mtproto-utils.c
             ./configure --enable-shared=no --enable-static=yes && make -j$(nproc)
+
+            echo ::set-output name=libs::$(ldd bin/telegram-cli)
             cd ../
             tar cvf tg.tar_armv7.gz tg
             
@@ -82,6 +84,7 @@ jobs:
       - name: Get the output
         run: |
             echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
+            echo "telegram libs is ${{ steps.runcmd.outputs.libs }}"
 
       - uses: actions/upload-artifact@v2
         with:
